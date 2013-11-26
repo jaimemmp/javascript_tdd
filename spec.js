@@ -87,4 +87,9 @@ describe("String parser", function(){
         expect(['MUNOZ']).toEqual(result);
     });
 
+    it("divides the string in single words" ,function(){
+        var result = parser.parseString('HELLO WORLD');
+        expect(['HELLO','WORLD']).toEqual(result);
+    });
+
 });
