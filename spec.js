@@ -6,8 +6,7 @@ function Parser(){
   this.parseString = function(string){
     var result = string.toUpperCase();
     result = this.singularize(result);
-    result = this.replaceTildes(result);
-    result = this.replaceSpecialChars(result);
+    result = this.replaceChars(result);
     return [result];
   };
 
@@ -22,23 +21,21 @@ function Parser(){
     return word.charAt(word.length -1) == 'S';
   };
 
-  this.replaceTildes = function(word){
+  this.replaceChars = function(word){
     var result = word;
     var cases = {
         "Á": "A",
         "É": "E",
         "Í": "I",
         "Ó": "O",
-        "Ú": "U"
+        "Ú": "U",
+        "$": "",
+        "?": ""
     };
     for (var letter in cases){
         result = result.replace(letter, cases[letter]);
     }
     return result;
-  };
-  this.replaceSpecialChars = function(word){
-    var result = word.replace("!", "");
-      return result.replace("$", "");
   };
 
 }
@@ -86,7 +83,7 @@ describe("String parser", function(){
     });
 
     it("replaces any special character, other case" ,function(){
-        var result = parser.parseString('!MUNOZ');
+        var result = parser.parseString('?MUNOZ');
         expect(['MUNOZ']).toEqual(result);
     });
 
