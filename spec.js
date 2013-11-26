@@ -1,13 +1,17 @@
 chai.should(); // invoking this function creates a "should" object on every object
 context = describe;
 
+lang = 'es';
+
 function Parser(){
   
   this.parseString = function(string){
     var result = string.toUpperCase();
     result = this.singularize(result);
     result = this.replaceChars(result);
-    return [result];
+    result = this.toArray(result);
+    result = this.removeArticles(result);
+    return result;
   };
 
   this.singularize = function(word) {
@@ -38,6 +42,21 @@ function Parser(){
     return result;
   };
 
+  this.removeArticles = function(words){
+    var articles = ["LA", "EL", "LOS", "LAS"];
+    
+    for (var i = 0, len = articles.length; i < len; i++){
+      var element = words.indexOf(articles[i]);
+      if(element >=0)
+        words.splice(element, 1);
+    }
+    
+    return words;
+  };
+
+  this.toArray = function(word){
+    return word.split(' ');
+  };
 }
 
 
@@ -92,4 +111,13 @@ describe("String parser", function(){
         expect(['HELLO','WORLD']).toEqual(result);
     });
 
+    it("replaces article 'LA'" ,function(){
+        var result = parser.parseString('LA INFO');
+        expect(['INFO']).toEqual(result);
+    });
+
+    it("replaces more than one article" ,function(){
+        var result = parser.parseString('LA INFO EL DATO');
+        expect(['INFO', 'DATO']).toEqual(result);
+    });
 });
