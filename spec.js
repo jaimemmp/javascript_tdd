@@ -7,6 +7,7 @@ function Parser(){
     var result = string.toUpperCase();
     result = this.singularize(result);
     result = this.replaceTildes(result);
+    result = this.replaceSpecialChars(result);
     return [result];
   };
 
@@ -35,7 +36,10 @@ function Parser(){
     }
     return result;
   };
-
+  this.replaceSpecialChars = function(word){
+    var result = word;
+      return result.replace("$", "");
+  };
 
 }
 
