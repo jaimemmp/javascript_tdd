@@ -36,6 +36,7 @@ function Parser(){
     return result;
   };
 
+
 }
 
 
@@ -73,6 +74,11 @@ describe("String parser", function(){
     it("replaces any 'tilde' character triangulating" ,function(){
         var result = parser.parseString('BARDAJÍ');
         expect(['BARDAJI']).toEqual(result);
+    });
+
+    it("replaces any special character" ,function(){
+        var result = parser.parseString('$MUNOZ');
+        expect(['MUNOZ']).toEqual(result);
     });
 
 });
