@@ -37,7 +37,7 @@ function Parser(){
     return result;
   };
   this.replaceSpecialChars = function(word){
-    var result = word;
+    var result = word.replace("!", "");
       return result.replace("$", "");
   };
 
@@ -82,6 +82,11 @@ describe("String parser", function(){
 
     it("replaces any special character" ,function(){
         var result = parser.parseString('$MUNOZ');
+        expect(['MUNOZ']).toEqual(result);
+    });
+
+    it("replaces any special character, other case" ,function(){
+        var result = parser.parseString('!MUNOZ');
         expect(['MUNOZ']).toEqual(result);
     });
 
